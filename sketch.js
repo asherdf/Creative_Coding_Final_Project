@@ -1,6 +1,8 @@
 var boxWidth;
 var boxHeight;
 var poemLines;	//this is gonna hold the text file
+var anArray = [];
+var bigSTRING = "";
 
 var testText = "Please,excuse.my!dear?aunt-sally";
 
@@ -9,6 +11,7 @@ function preload(){
 	//load the text file into an array based on lines in the
 	//	original:
 	poemLines = loadStrings('Shel_Silverstein.txt');
+	// potterLines = loadStrings('HarryPotter_SS.txt');
 
 }
 
@@ -29,10 +32,13 @@ function draw() {
 	background(0);
 	fill(255);
 
-	var splitString = splitTokens(testText, " ,.!?-");
-	for (i = 0; i < testText.length; i++){
-		text(splitString[i], 5, 30 + (i*20));
-	}
+	wordArray();
+
+	// var splitString = splitTokens(poemLines, " ,.!?-");
+	// for (i = 0; i < poemLines.length; i++){
+	// 	anArray[i] = new Array();
+	// 	text(splitString[i], 5, 30 + (i*20));
+	// }
 	// text(splitString[0], 5, 30);
 	// text(splitString[1], 5, 50);
 	// text(splitString[2], 5, 70);
@@ -72,12 +78,21 @@ https://p5js.org/reference/#/p5/splitTokens
 
 //--------------------------------------------------------------
 //this is modeled after Luke's code (class8 / 01prepalice)
-function scrub(){	//this generates a "cooked text file"
+function scrub(){
+//this generates a "cooked" text file whereby the entire text
+//	is analyzed and changed, and information about the original
+//	text file is displayed in the console. 
+//		- It will change all Uppercase letters to Lowercase
+//		- All punctuation is removed
+//		- All whitespace is removed
+//		- How many lines are there in the original text file?
+//		- How many chapters are there in the original text file?
 
 	//how many lines are there?
 	console.log("there are " + poemLines.length + " lines!");
 
-	var bigSTRING = ""; //the WHOLE POEM in one HUGE STRING
+	//the WHOLE POEM in one HUGE STRING
+	//var bigSTRING = "";
 	
 	//concatenate whole book into one string:
 	for (var i = 0; i<poemLines.length; i++){
@@ -91,8 +106,10 @@ function scrub(){	//this generates a "cooked text file"
 	//you still start and end with / characters and slap a 'g'
 	//	on the end.
 	bigSTRING = bigSTRING.replace(/[^a-zA-Z0-9' ]/g, " ");
+
 	//address any apostrophe at beginning
 	bigSTRING = bigSTRING.replace(/ '/g, " ");
+
 	//address any apostrophe at end 
 	bigSTRING = bigSTRING.replace(/' /g, " "); 
 
@@ -108,94 +125,40 @@ function scrub(){	//this generates a "cooked text file"
 	bigSTRING = bigSTRING.trim();
 
 	console.log(bigSTRING);
-// ------------------------
-	// var alicelines; // this is gonna hold the text file
 
-	// // you load text files in preload() just like images
-	// function preload() {
-	//   // ignore the bullshit error that happens when you do this:
-	//   // load the text file into an array based on lines in the original:
-	//   alicelines = loadStrings('./data/aliceinwonderland.txt');
+	// the split will cut a string into an array of substrings
+	// based on a matching pattern:
+	var chapters = bigSTRING.split(/chapter [a-z]+/);
+	// how many chapters?
+	console.log("there are " + chapters.length + " chapters!");
 	  
-	// }
-
-	//function setup() {
-
-	  // //console.log(alicelines); // print out the whole damn thing as an array
-	  // console.log("there are " + alicelines.length + " lines!"); // how many lines?
-
-	  // var bigstring = ""; // the WHOLE BOOK in one HUGE STRING
-	  // // concatenate whole book into one string:
-	  // for (var i = 0; i<alicelines.length; i++)
-	  // {
-	  //   //console.log(i);
-	  //   bigstring+=alicelines[i]+" ";
-	  // }
-
-	  // this is the whole original book:
-	  //console.log(bigstring);
-	  
-	  
-	  // this is how this works:
-	  // this is a regular expression that replaces
-	  // every instance of the word Rabbit with the word
-	  // Fox.  the / / are the boundaries of the search string.
-	  // the 'g' at the end means 'global', which will replace
-	  // *every* instance of 'Rabbit' with 'Fox'.
-	  //
-	  // there's a good regex cheat sheet here:
-	  // http://atarininja.org/~wxs/dump/ref/reference.html
-	  //
-	  
-	  // TEST: replace Rabbit with Fox:
-	  //bigstring = bigstring.replace(/Rabbit/g, "Fox");
-
-
-	  // regular expressions can be ranges:
-	  //bigstring = bigstring.replace(/[A-G]/g, "#");
-	  //bigstring = bigstring.replace(/[H-K]/g, "!");
-	  //bigstring = bigstring.replace(/[L-Z]/g, "&");
-	  //bigstring = bigstring.replace(/[a-z]/g, "%");
-
-	  
-	  // // strip all punctuation (regex):
-	  // // the ^ character is a negation
-	  // // the [] say we're talking regular expression-eese, not literal strings
-	  // // you still start and end with / characters and slap a 'g' on the end.
-	  // bigstring = bigstring.replace(/[^a-zA-Z0-9' ]/g, " ");
-
-	  // fix apostrophe catastrophe
-	  // bigstring = bigstring.replace(/ '/g, " "); // apostrophe at beginning
-	  // bigstring = bigstring.replace(/' /g, " "); // apostrophe at end
-
-	  // // move to lowercase
-	  // // bigstring = bigstring.toUpperCase();
-	  // bigstring = bigstring.toLowerCase();
-
-	  // // strip leading and extra whitespace (regex):
-	  // // a + will take into account repeats
-	  // bigstring = bigstring.replace(/ +/g, " ");
-	  // bigstring = bigstring.trim();
-
-	  // view:
-	  // console.log(bigstring);
-
-	//   // the split will cut a string into an array of substrings
-	//   // based on a matching pattern:
-	//   var chapters = bigstring.split(/chapter [a-z]+/);
-	//   // how many chapters?
-	//   console.log("there are " + chapters.length + " chapters!");
-	  
-	//   // one last strip of whitespace
-	//   for(var i = 0;i<chapters.length;i++)
-	//   {
-	//     chapters[i] = chapters[i].trim();
-	//   }
+	// one last strip of whitespace
+	for(var i = 0;i<chapters.length;i++)
+	{
+	  chapters[i] = chapters[i].trim();
+	}
 	  
 
-	//   // step 4: output a "cooked" text file
-	//   // write line-by-line:
-	//   saveStrings(chapters, 'alice_cooked.txt');
+	// step 4: output a "cooked" text file
+	// write line-by-line:
+	// saveStrings(chapters, 'alice_cooked.txt');
+}
 
-	//}
+//----------------------------------------------------------------
+function wordArray(){
+//create an array where each index is a single word
+	
+	//search the string "bigSTRING" and break it up every time
+	//	whitespace is found. Store that word in the variable
+	//	"splitString"
+	var splitString = bigSTRING.split(/\s/);
+	
+	//how many words are there in "splitString?"
+	console.log (splitString.length); 
+
+	for (i = 0; i < splitString.length; i++){		
+		anArray[i] = splitString[i];
+		// text(anArray[i], 5, 30 + (i*20));
+		text(anArray[i] + " ", 0, 10);
+	}
 }
