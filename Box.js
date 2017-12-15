@@ -4,18 +4,18 @@
 //measure the text WIDTH
 
 class Box{
-	constructor(word, xPos, yPos){
-		this.wordWidth = word;
+	constructor(words, xPos, yPos){
+		this.word = words;
 		this.rectHeight = 12;	//default text size in pixels
 		this.nextLine = 15;	//default text leading in pixels
 		this.wordX = xPos;	//the words' X-location
 		this.wordY = yPos;	//the words' Y-location
-		// this.rectWidth = textWidth(this.wordWidth);
-	
+		// this.rectWidth = textWidth(this.wordWidth);	
+
 	}
 
 	measure(){
-		this.rectWidth = textWidth(this.wordWidth);
+		this.rectWidth = textWidth(this.word);
 	}
 
 	draw(){

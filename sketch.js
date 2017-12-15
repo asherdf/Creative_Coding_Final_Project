@@ -16,10 +16,7 @@ function preload(){
 function setup() { 
 	createCanvas(700,475);
 	background(0);
-
-	var xPos = 0;	//starting X position for the boxes
-	var yPos = 0;	//starting Y position for the boxes
-
+	
 	scrub();
 
 	//search the string "bigSTRING" and break it up every time
@@ -34,18 +31,22 @@ function setup() {
 	//fontSize(12);
 	// text(poemLines, 0, 0, width, height);
 
+	var xPos = 0;	//starting X position for the boxes
+	var yPos = 0;	//starting Y position for the boxes
+
 	for (i = 0; i < splitString.length; i++){
 		boxArray[i] = new Box(splitString[i], xPos, yPos);
-		
-		xPos = textWidth(splitString[i]) + 4;
-		if (xPos + textWidth(splitString[i]) > width){
+		console.log(splitString[i]);
+		xPos += textWidth(splitString[i]) + 4;
+		if ((xPos + textWidth(splitString[i])) > width){
 			yPos += 15;
 			xPos = 0;
 		}
 	}
+
 	for(i=0; i<boxArray.length; i++){
 		// text(boxArray[i],0,10);
-		console.log(boxArray[i]);
+		//console.log(boxArray[i]);
 	}
 
 	/*
@@ -65,6 +66,7 @@ function setup() {
 //---------------------------------------------------------------
 function draw() {
 	// background(0);
+	// console.log(mouseX);
 	fill(255);
 		
 	for (i = 0; i < boxArray.length; i++){
