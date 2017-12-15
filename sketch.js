@@ -1,15 +1,12 @@
-var boxWidth;
-var boxHeight;
 var poemLines;	//this is gonna hold the text file
-var anArray = [];
+var boxArray = [];
 var bigSTRING = "";
+var splitString;
 
 var testText = "Please,excuse.my!dear?aunt-sally";
 
 function preload(){
 	
-	//load the text file into an array based on lines in the
-	//	original:
 	poemLines = loadStrings('Shel_Silverstein.txt');
 	// potterLines = loadStrings('HarryPotter_SS.txt');
 
@@ -17,64 +14,70 @@ function preload(){
 
 //---------------------------------------------------------------
 function setup() { 
-	createCanvas(1000,800);
+	createCanvas(700,475);
+	background(0);
+
+	var xPos = 0;	//starting X position for the boxes
+	var yPos = 0;	//starting Y position for the boxes
 
 	scrub();
 
-	//text(poem, width/2, height/2, 80, 80);
+	//search the string "bigSTRING" and break it up every time
+	//	whitespace is found. Store that word in the variable
+	//	"splitString"
+	//"\s" is regex for whitespace
+	splitString = bigSTRING.split(/\s/);
+	//how many words are there in "splitString?"
+	// console.log (splitString.length);
 
-	// var boxWidth = textWidth(poem);
-	// var boxHeight;
+	fill(255);
+	//fontSize(12);
+	// text(poemLines, 0, 0, width, height);
+
+	for (i = 0; i < splitString.length; i++){
+		boxArray[i] = new Box(splitString[i], xPos, yPos);
+		
+		xPos = textWidth(splitString[i]) + 4;
+		if (xPos + textWidth(splitString[i]) > width){
+			yPos += 15;
+			xPos = 0;
+		}
+	}
+	for(i=0; i<boxArray.length; i++){
+		// text(boxArray[i],0,10);
+		console.log(boxArray[i]);
+	}
+
+	/*
+	//Discover the text's DEFAULT Ascent, Descent, Leading,
+	//	and Size values
+	var wordHeight = textAscent();
+	var wordDepth = textDescent();
+	var wordLeading = textLeading();
+	var wordSize = textSize();
+	console.log("Text Ascent = " + wordHeight);
+	console.log("Text Descent = " + wordDepth);
+	console.log("Text Leading = " + wordLeading);
+	console.log("Text Size = " + wordSize);
+	*/
 }
 
 //---------------------------------------------------------------
 function draw() {
-	background(0);
+	// background(0);
 	fill(255);
+		
+	for (i = 0; i < boxArray.length; i++){
+		boxArray[i].measure();
+		boxArray[i].draw();
+		boxArray[i].fillBox();
+	}
+	// print(mouseIsPressed);
 
-	wordArray();
-
-	// var splitString = splitTokens(poemLines, " ,.!?-");
-	// for (i = 0; i < poemLines.length; i++){
-	// 	anArray[i] = new Array();
-	// 	text(splitString[i], 5, 30 + (i*20));
-	// }
-	// text(splitString[0], 5, 30);
-	// text(splitString[1], 5, 50);
-	// text(splitString[2], 5, 70);
-
-	// text(poem, 0,0, width,height);
-
-	// boxWidth = textWidth(poem);
-	// boxHeight = 10;
-	// rect(0,0, boxWidth*10,boxHeight);
-
+	// wordArray();
+	// text(bigSTRING,0,5);
 
 }
-
-
-/*
-textSize()
-https://p5js.org/reference/#/p5/textSize
-
-textWidth()
-https://p5js.org/reference/#/p5/textWidth
-
-loadStrings()
-https://p5js.org/reference/#/p5/loadStrings
-
-textDescent()
-https://p5js.org/reference/#/p5/textDescent
-
-textAscent()
-https://p5js.org/reference/#/p5/textAscent
-
-split()
-https://p5js.org/reference/#/p5/split
-
-splitTokens()
-https://p5js.org/reference/#/p5/splitTokens
-*/
 
 //--------------------------------------------------------------
 //this is modeled after Luke's code (class8 / 01prepalice)
@@ -89,7 +92,7 @@ function scrub(){
 //		- How many chapters are there in the original text file?
 
 	//how many lines are there?
-	console.log("there are " + poemLines.length + " lines!");
+	// console.log("there are " + poemLines.length + " lines!");
 
 	//the WHOLE POEM in one HUGE STRING
 	//var bigSTRING = "";
@@ -113,7 +116,7 @@ function scrub(){
 	//address any apostrophe at end 
 	bigSTRING = bigSTRING.replace(/' /g, " "); 
 
-	//move to lowercase
+	//change to lowercase
 	bigSTRING = bigSTRING.toLowerCase();
 
 	//strip leading and extra whitespace (regex):
@@ -124,13 +127,13 @@ function scrub(){
 	//	and end of the string
 	bigSTRING = bigSTRING.trim();
 
-	console.log(bigSTRING);
+	// console.log(bigSTRING);
 
 	// the split will cut a string into an array of substrings
 	// based on a matching pattern:
 	var chapters = bigSTRING.split(/chapter [a-z]+/);
 	// how many chapters?
-	console.log("there are " + chapters.length + " chapters!");
+	// console.log("there are " + chapters.length + " chapters!");
 	  
 	// one last strip of whitespace
 	for(var i = 0;i<chapters.length;i++)
@@ -142,23 +145,4 @@ function scrub(){
 	// step 4: output a "cooked" text file
 	// write line-by-line:
 	// saveStrings(chapters, 'alice_cooked.txt');
-}
-
-//----------------------------------------------------------------
-function wordArray(){
-//create an array where each index is a single word
-	
-	//search the string "bigSTRING" and break it up every time
-	//	whitespace is found. Store that word in the variable
-	//	"splitString"
-	var splitString = bigSTRING.split(/\s/);
-	
-	//how many words are there in "splitString?"
-	console.log (splitString.length); 
-
-	for (i = 0; i < splitString.length; i++){		
-		anArray[i] = splitString[i];
-		// text(anArray[i], 5, 30 + (i*20));
-		text(anArray[i] + " ", 0, 10);
-	}
 }
