@@ -36,7 +36,7 @@ function setup() {
 
 	for (i = 0; i < splitString.length; i++){
 		boxArray[i] = new Box(splitString[i], xPos, yPos);
-		console.log(splitString[i]);
+		// console.log(splitString[i]);
 		xPos += textWidth(splitString[i]) + 4;
 		if ((xPos + textWidth(splitString[i])) > width){
 			yPos += 15;
@@ -67,12 +67,13 @@ function setup() {
 function draw() {
 	// background(0);
 	// console.log(mouseX);
-	fill(255);
+	// fill(255);
 		
 	for (i = 0; i < boxArray.length; i++){
 		boxArray[i].measure();
-		boxArray[i].draw();
 		boxArray[i].fillBox();
+		boxArray[i].draw();
+		// boxArray[i].fillBox();
 	}
 	// print(mouseIsPressed);
 
