@@ -5,6 +5,8 @@ var splitString;
 
 var testText = "Please,excuse.my!dear?aunt-sally";
 
+var fillColor = [180, 255, 255];
+
 function preload(){
 	
 	poemLines = loadStrings('Shel_Silverstein.txt');
@@ -14,8 +16,11 @@ function preload(){
 
 //---------------------------------------------------------------
 function setup() { 
-	createCanvas(700,475);
+	createCanvas(windowWidth,windowHeight);
 	background(0);
+
+	gui = createGui('Ashers GUI');
+	gui.addGlobals('fillColor');
 	
 	scrub();
 
@@ -68,12 +73,13 @@ function draw() {
 	// background(0);
 	// console.log(mouseX);
 	// fill(255);
-		
+	
+	// scale(0.5);
+
 	for (i = 0; i < boxArray.length; i++){
 		boxArray[i].measure();
 		boxArray[i].fillBox();
 		boxArray[i].draw();
-		// boxArray[i].fillBox();
 	}
 	// print(mouseIsPressed);
 
