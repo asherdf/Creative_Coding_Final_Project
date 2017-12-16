@@ -19,6 +19,7 @@ function setup() {
 	createCanvas(windowWidth,windowHeight);
 	background(0);
 
+	// Create the color GUI
 	gui = createGui('Ashers GUI');
 	gui.addGlobals('fillColor');
 	
@@ -37,7 +38,7 @@ function setup() {
 	// text(poemLines, 0, 0, width, height);
 
 	var xPos = 0;	//starting X position for the boxes
-	var yPos = 0;	//starting Y position for the boxes
+	var yPos = 125;	//starting Y position for the boxes
 
 	for (i = 0; i < splitString.length; i++){
 		boxArray[i] = new Box(splitString[i], xPos, yPos);
@@ -47,11 +48,6 @@ function setup() {
 			yPos += 15;
 			xPos = 0;
 		}
-	}
-
-	for(i=0; i<boxArray.length; i++){
-		// text(boxArray[i],0,10);
-		//console.log(boxArray[i]);
 	}
 
 	/*
@@ -75,6 +71,8 @@ function draw() {
 	// fill(255);
 	
 	// scale(0.5);
+
+	fill(fillColor);
 
 	for (i = 0; i < boxArray.length; i++){
 		boxArray[i].measure();

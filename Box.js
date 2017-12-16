@@ -19,16 +19,7 @@ class Box{
 	}
 
 	draw(){
-		// fill(255);
-		// fillBox();
-		// if (mouseX > this.wordX && mouseX < this.rectWidth){
-		// 	if (mouseY > this.wordY && mouseY < this.rectHeight){
-		// 		if (mouseIsPressed){
-		// 			fill(255,0,0);
-		// 			console.log("YES");
-		// 		}
-		// 	}
-		// }
+		
 		fill(this.colors);
 		rect(this.wordX,this.wordY,
 			 this.rectWidth,this.rectHeight);
@@ -47,7 +38,7 @@ class Box{
 				mouseY < (this.wordY + this.rectHeight)){
 				if (mouseIsPressed){
 					//fill(255,0,0);
-					this.colors = 100;
+					this.colors = fillColor;
 					// console.log(mouseIsPressed);
 				}
 			}
