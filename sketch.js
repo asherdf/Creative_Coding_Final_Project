@@ -3,16 +3,14 @@ var boxArray = [];
 var bigSTRING = "";
 var splitString;
 
-// var testText = "Please,excuse.my!dear?aunt-sally";
-
-var fillColor = [180, 180, 255];
+var fillColor = [180, 180, 255];	//starting color to fill in the boxes
 
 function preload(){
 	
 	textLines = loadStrings('Text/HPch1.txt');
 	hpFont = loadFont('Font/harry_p/HARRYP__.ttf');
-	defFont = loadFont('Font/helvetica/HELR45W.ttf');
 
+	hpJingle = loadSound('HarryPotter_HedwigsTheme_Short.wav');
 }
 
 //---------------------------------------------------------------
@@ -56,8 +54,6 @@ function setup() {
 	var theAfter = " words from ";
 	var theBook = "Harry Potter and the Sorcerer's Stone";
 
-	// textAlign(RIGHT, CENTER);
-	
 	//"The first "
 	textSize(32);
 	text(theBeginning, width/4, 50);
@@ -90,8 +86,6 @@ function setup() {
 
 //---------------------------------------------------------------
 function draw() {
-	// background(0);
-	// console.log(mouseX);
 
 	fill(fillColor);
 
@@ -100,6 +94,8 @@ function draw() {
 		boxArray[i].fillBox();
 		boxArray[i].draw();
 	}
+
+	hpJingle.play();
 }
 
 //--------------------------------------------------------------
