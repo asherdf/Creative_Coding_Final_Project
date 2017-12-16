@@ -1,16 +1,17 @@
-var poemLines;	//this is gonna hold the text file
+var textLines;	//this is gonna hold the text file
 var boxArray = [];
 var bigSTRING = "";
 var splitString;
 
-var testText = "Please,excuse.my!dear?aunt-sally";
+// var testText = "Please,excuse.my!dear?aunt-sally";
 
-var fillColor = [180, 255, 255];
+var fillColor = [180, 180, 255];
 
 function preload(){
 	
-	poemLines = loadStrings('Shel_Silverstein.txt');
-	// potterLines = loadStrings('HarryPotter_SS.txt');
+	textLines = loadStrings('Text/HPch1.txt');
+	hpFont = loadFont('Font/harry_p/HARRYP__.ttf');
+	defFont = loadFont('Font/helvetica/HELR45W.ttf');
 
 }
 
@@ -31,11 +32,9 @@ function setup() {
 	//"\s" is regex for whitespace
 	splitString = bigSTRING.split(/\s/);
 	//how many words are there in "splitString?"
-	// console.log (splitString.length);
+	console.log (splitString.length);
 
 	fill(255);
-	//fontSize(12);
-	// text(poemLines, 0, 0, width, height);
 
 	var xPos = 0;	//starting X position for the boxes
 	var yPos = 125;	//starting Y position for the boxes
@@ -49,6 +48,31 @@ function setup() {
 			xPos = 0;
 		}
 	}
+
+	//Text description on the screen
+	var normalFont = textFont();
+	var theBeginning = "The first ";
+	var theNumber = splitString.length;
+	var theAfter = " words from ";
+	var theBook = "Harry Potter and the Sorcerer's Stone";
+
+	// textAlign(RIGHT, CENTER);
+	
+	//"The first "
+	textSize(32);
+	text(theBeginning, width/4, 50);
+	//"The first 403"
+	fill(0,255,0);
+	text(theNumber, (width/4)+textWidth(theBeginning), 50);
+	//"The first 403 words from "
+	fill(255);
+	text(theAfter, (width/4)+(textWidth(theBeginning + theNumber)), 50);	
+	//"The first 403 words from Harry Potter and the Sorcerer's Stone"
+	textFont(hpFont);
+	textSize(38);
+	text(theBook, (width/4)+(textWidth(theBeginning + theNumber + theAfter))+40, 50);
+	textFont(normalFont);
+	textSize(12);
 
 	/*
 	//Discover the text's DEFAULT Ascent, Descent, Leading,
@@ -68,9 +92,6 @@ function setup() {
 function draw() {
 	// background(0);
 	// console.log(mouseX);
-	// fill(255);
-	
-	// scale(0.5);
 
 	fill(fillColor);
 
@@ -79,11 +100,6 @@ function draw() {
 		boxArray[i].fillBox();
 		boxArray[i].draw();
 	}
-	// print(mouseIsPressed);
-
-	// wordArray();
-	// text(bigSTRING,0,5);
-
 }
 
 //--------------------------------------------------------------
@@ -99,14 +115,14 @@ function scrub(){
 //		- How many chapters are there in the original text file?
 
 	//how many lines are there?
-	// console.log("there are " + poemLines.length + " lines!");
+	// console.log("there are " + textLines.length + " lines!");
 
 	//the WHOLE POEM in one HUGE STRING
 	//var bigSTRING = "";
 	
 	//concatenate whole book into one string:
-	for (var i = 0; i<poemLines.length; i++){
-		bigSTRING+=poemLines[i]+" ";
+	for (var i = 0; i<textLines.length; i++){
+		bigSTRING+=textLines[i]+" ";
 	}
 
 	//strip all punctuation (regex):
