@@ -1,3 +1,12 @@
+/*
+The purpose of this code is to create an array of pixels, based
+the length and position of words from a given piece of text,
+that the user can fill in from a GUI
+
+It also displays the word count and plays a tune from the
+source material
+*/
+
 var textLines;	//this is gonna hold the text file
 var boxArray = [];
 var bigSTRING = "";
@@ -5,16 +14,19 @@ var splitString;
 
 var fillColor = [180, 180, 255];	//starting color to fill in the boxes
 
-function preload(){
-	
+//Load the Harry Potter text, font, and audio file before
+//	doing anything
+function preload(){	
 	textLines = loadStrings('Text/HPch1.txt');
 	hpFont = loadFont('Font/harry_p/HARRYP__.ttf');
-
 	hpJingle = loadSound('HarryPotter_HedwigsTheme_Short.wav');
 }
 
 //---------------------------------------------------------------
-function setup() { 
+function setup() {
+
+	//Make the canvas extend to the entire length and width
+	//	of the browser window
 	createCanvas(windowWidth,windowHeight);
 	background(0);
 
@@ -22,6 +34,9 @@ function setup() {
 	gui = createGui('Ashers GUI');
 	gui.addGlobals('fillColor');
 	
+	//Scrub the text file so there's no punctuation, all
+	//	the letters are lower case, and eliminate
+	//	unnecessary white space
 	scrub();
 
 	//search the string "bigSTRING" and break it up every time
@@ -29,18 +44,25 @@ function setup() {
 	//	"splitString"
 	//"\s" is regex for whitespace
 	splitString = bigSTRING.split(/\s/);
+	
 	//how many words are there in "splitString?"
-	console.log (splitString.length);
-
-	fill(255);
+	// console.log (splitString.length);
 
 	var xPos = 0;	//starting X position for the boxes
 	var yPos = 125;	//starting Y position for the boxes
 
+	//Make each element in the boxArray of class type Box
 	for (i = 0; i < splitString.length; i++){
 		boxArray[i] = new Box(splitString[i], xPos, yPos);
 		// console.log(splitString[i]);
+
+		//Make the next box's X position the length of the previous
+		//	box + 4 to account for the space between the words in
+		//	the original text
 		xPos += textWidth(splitString[i]) + 4;
+
+		//If the box extends off the screen, set its X location
+		//	to 0 and shift it down one line
 		if ((xPos + textWidth(splitString[i])) > width){
 			yPos += 15;
 			xPos = 0;
@@ -64,9 +86,12 @@ function setup() {
 	fill(255);
 	text(theAfter, (width/4)+(textWidth(theBeginning + theNumber)), 50);	
 	//"The first 403 words from Harry Potter and the Sorcerer's Stone"
+	//Change the last bit to Harry Potter font
 	textFont(hpFont);
 	textSize(38);
 	text(theBook, (width/4)+(textWidth(theBeginning + theNumber + theAfter))+40, 50);
+	//Change the font type and size back to normal to measure
+	//	the boxes
 	textFont(normalFont);
 	textSize(12);
 
@@ -87,14 +112,18 @@ function setup() {
 //---------------------------------------------------------------
 function draw() {
 
+	//Make sure the fill of a box is based on the color selected
+	//	from the GUI
 	fill(fillColor);
 
+	//Display all the boxes in boxArray
 	for (i = 0; i < boxArray.length; i++){
 		boxArray[i].measure();
 		boxArray[i].fillBox();
 		boxArray[i].draw();
 	}
 
+	//Play the Harry Potter jingle when the program opens
 	hpJingle.play();
 }
 
