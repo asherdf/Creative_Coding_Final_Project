@@ -25,6 +25,8 @@ function preload(){
 //---------------------------------------------------------------
 function setup() {
 
+	frameRate(10);
+
 	//Make the canvas extend to the entire length and width
 	//	of the browser window
 	createCanvas(windowWidth,windowHeight);
@@ -77,6 +79,7 @@ function setup() {
 	var theBook = "Harry Potter and the Sorcerer's Stone";
 
 	//"The first "
+	fill(255);
 	textSize(32);
 	text(theBeginning, width/4, 50);
 	//"The first 403"
@@ -118,13 +121,16 @@ function draw() {
 
 	//Display all the boxes in boxArray
 	for (i = 0; i < boxArray.length; i++){
-		boxArray[i].measure();
-		boxArray[i].fillBox();
+		// boxArray[i].measure();
+		if (mouseIsPressed){
+			boxArray[i].fillBox();
+		}
+		// boxArray[i].fillBox();
 		boxArray[i].draw();
 	}
 
 	//Play the Harry Potter jingle when the program opens
-	hpJingle.play();
+	// hpJingle.play();
 }
 
 //--------------------------------------------------------------

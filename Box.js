@@ -16,11 +16,14 @@ class Box{
 	//Establish the width of a rectangle as the width of 
 	//	the word it's measuring
 	measure(){
-		this.rectWidth = textWidth(this.word);
+		// this.rectWidth = textWidth(this.word);
 	}
 
 	//Determines the location and dimentions of the box
-	draw(){		
+	draw(){	
+
+		this.rectWidth = textWidth(this.word);
+		
 		//Set the default fill to white
 		fill(this.colors);
 
@@ -41,12 +44,12 @@ class Box{
 				mouseY < (this.wordY + this.rectHeight)){
 
 				//Check if mouse is pressed
-				if (mouseIsPressed){
+				// if (mouseIsPressed){
 
 					//Set the fill to the color from the GUI
 					this.colors = fillColor;
 					// console.log(mouseIsPressed);
-				}
+				// }
 			}
 		}
 		// print(mouseIsPressed);
